@@ -8,6 +8,12 @@ args["port"]
 
 const port = args["port"] || process.env.PORT || 5000
 
+// Start an app server
+const server = app.listen(port, () => {
+    console.log('App listening on port %PORT%'.replace('%PORT%',port))
+});
+
+
 function coinFlip() {
     return (Math.random() < 0.5 ? 'tails' : 'heads');
 }
@@ -40,35 +46,27 @@ function countFlips(array) {
     }
    
     if (head_count > 0 && tail_count == 0) {
-      return `{ "heads": ${head_count}}`
+      return { "heads": head_count}
     } 
     else if (tail_count > 0 && head_count == 0) {
-      return `{ "tails": ${tail_count}}`
+      return { "tails": tail_count}
     } 
     else {
-      return `{ "heads": ${head_count}, "tails": ${tail_count} }`
+      return { "heads": head_count, "tails": tail_count} 
     }
   }
 
   function flipACoin(call) {
     var flip=coinFlip();
-    var result='win'
+    var result='lose'
   
     if (flip==call){
       result='win'
     }
-    else{
-      result='lose'
-    }
-  
-    return "{call: '"+ call + "', flip:'" + flip + "', result:'" + result + "'}";
-  }
+      
+    return { 'call': call, 'flip': flip, 'result': result };  
+}
 
-
-// Start an app server
-const server = app.listen(port, () => {
-    console.log('App listening on port %PORT%'.replace('%PORT%',port))
-});
 
 app.get('/app/flip/', (req, res) => {
     res.status(200);
@@ -85,16 +83,6 @@ app.get('/app/', (req, res) => {
         res.end(res.statusCode+ ' ' +res.statusMessage)
 });
    
-app.get('/app/flip/call/heads/', (req, res) => {
-    res.status(200);
-    res.json(flipACoin('heads'));
-});
-
-app.get('/app/flip/call/tails/', (req, res) => {
-    res.status(200);
-    res.json(flipACoin('tails'));
-});
-
 app.get('/app/flips/:number/', (req, res) => {
     res.status(200);
     const flips = req.params.number || 1;
@@ -105,6 +93,18 @@ app.get('/app/flips/:number/', (req, res) => {
     };
     res.json(rawjson)
 });
+
+app.get('/app/flip/call/heads/', (req, res) => {
+    res.status(200);
+    res.json(flipACoin('heads'));
+});
+
+app.get('/app/flip/call/tails/', (req, res) => {
+    res.status(200);
+    res.json(flipACoin('tails'));
+});
+
+
 
 
 // Default response for any other request
