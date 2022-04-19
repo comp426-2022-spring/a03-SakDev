@@ -98,9 +98,10 @@ app.get('/app/flip/call/tails/', (req, res) => {
 app.get('/app/flips/:number/', (req, res) => {
     res.status(200);
     const flips = req.params.number || 1;
+    const vals = coinFlips(flips);
     const rawjson = {
-        "raw" : coinFlips(flips),
-        "summary": countFlips(values)
+        "raw" : vals,
+        "summary": countFlips(vals)
     };
     res.json(rawjson)
 });
