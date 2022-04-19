@@ -40,13 +40,13 @@ function countFlips(array) {
     }
    
     if (head_count > 0 && tail_count == 0) {
-      return `{ heads: ${head_count}}`
+      return `{ "heads": ${head_count}}`
     } 
     else if (tail_count > 0 && head_count == 0) {
-      return `{ tails: ${tail_count}}`
+      return `{ "tails": ${tail_count}}`
     } 
     else {
-      return `{ heads: ${head_count}, "tails": ${tail_count} }`
+      return `{ "heads": ${head_count}, "tails": ${tail_count} }`
     }
   }
 
@@ -61,7 +61,7 @@ function countFlips(array) {
       result='lose'
     }
   
-    return "{ call: '"+ call + "', flip: '" + flip + "', result: '" + result + "' }";
+    return "{call: '"+ call + "', flip:'" + flip + "', result:'" + result + "'}";
   }
 
 
