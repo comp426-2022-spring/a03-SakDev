@@ -95,13 +95,16 @@ app.get('/app/flip/call/tails/', (req, res) => {
     res.json(flipACoin('tails'));
 });
 
-app.get('/app/flips/:number', (req, res) => {
-    const flips = coinFlips(req.params.number)
-    res.status(200).json({
-    "raw":flips,
-    "summary":countFlips(flips)
-   })
+app.get('/app/flips/:number/', (req, res) => {
+    res.status(200);
+    const flips = req.params.number || 1;
+    const rawjson = {
+        "raw" : coinFlips(flips),
+        "summary": countFlips(values)
+    };
+    res.json(rawjson)
 });
+
 
 // Default response for any other request
 app.use(function(req, res){
