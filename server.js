@@ -54,7 +54,7 @@ function countFlips(array) {
     var flip=coinFlip();
     var result='win'
   
-    if (flipACoin==call){
+    if (flip==call){
       result='win'
     }
     else{
